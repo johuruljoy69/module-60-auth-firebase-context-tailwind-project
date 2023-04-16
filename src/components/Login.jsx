@@ -4,7 +4,7 @@ import { AuthContext } from '../provider/AuthProviders';
 
 const Login = () => {
 
-    const {signIn} = useContext(AuthContext);
+    const {signIn, signInWithGoogle} = useContext(AuthContext);
 
     const handleLogin = (event) =>{
         event.preventDefault();
@@ -17,11 +17,23 @@ const Login = () => {
         .then(result =>{
             const loggedUser = result.user
             console.log(loggedUser);
+            form.reset();
         })
         .catch(error =>{
             console.log(error);
         })
     }
+    const handleInGoogleSign =event =>{
+        signInWithGoogle()
+        .then(result =>{
+            const loggedUser = result.user;
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col">
@@ -51,6 +63,9 @@ const Login = () => {
                         </div>
                     </form>
                     <h2 className='p-5'>New to JS TechZone?<Link className='text-indigo-800' to='/register' > Please Register</Link></h2>
+                    <div className='p-5'>
+                    <button onClick={handleInGoogleSign} className="btn btn-primary">Google</button>
+                    </div>
                 </div>
             </div>
         </div>
